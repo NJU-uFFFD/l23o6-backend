@@ -2,6 +2,8 @@ package org.fffd.l23o6.pojo.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,6 +15,8 @@ import java.util.Date;
 @Entity
 @Table(name = "user1")  // table name "user" is a reserved word in H2
 @Data
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class UserEntity {
 

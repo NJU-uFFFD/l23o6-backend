@@ -14,6 +14,17 @@ public class UserServiceImpl implements UserService {
     private final UserDao userDao;
 
     @Override
+    public void register(String username, String password) {
+        UserEntity user = userDao.findByUsername(username);
+
+        if (user != null) {
+            throw new BizException(ErrorType.USERNAME_EXISTS);
+        }
+
+        userDao.save(UserEntity.builder().username(username).password(password).build());
+    }
+
+    @Override
     public void login(String username, String password) {
         UserEntity user = userDao.findByUsername(username);
         if (user == null || !user.getPassword().equals(password)) {
