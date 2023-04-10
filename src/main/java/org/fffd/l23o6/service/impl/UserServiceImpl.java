@@ -10,6 +10,7 @@ import org.fffd.l23o6.entity.UserEntity;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
+
     @Override
     public void login(String username, String password) {
         UserEntity user = userDao.findByUsername(username);

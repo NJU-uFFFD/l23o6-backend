@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @Builder
 public class Response<T> {
-	private int status;
-	private String msg;
-	private T data;
+    private int status;
+    private String msg;
+    private T data;
 }
