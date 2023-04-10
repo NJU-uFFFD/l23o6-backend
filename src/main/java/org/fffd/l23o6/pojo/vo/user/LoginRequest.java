@@ -1,4 +1,4 @@
-package org.fffd.l23o6.pojo;
+package org.fffd.l23o6.pojo.vo.user;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;

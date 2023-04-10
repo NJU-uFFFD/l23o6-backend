@@ -2,6 +2,8 @@ package org.fffd.l23o6.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.fffd.l23o6.dao.UserDao;
+import org.fffd.l23o6.exception.BizException;
+import org.fffd.l23o6.exception.ErrorType;
 import org.fffd.l23o6.pojo.entity.UserEntity;
 import org.fffd.l23o6.service.UserService;
 import org.springframework.stereotype.Service;
@@ -15,7 +17,7 @@ public class UserServiceImpl implements UserService {
     public void login(String username, String password) {
         UserEntity user = userDao.findByUsername(username);
         if (user == null || !user.getPassword().equals(password)) {
-            throw new RuntimeException("用户名或密码错误");
+            throw new BizException(ErrorType.INVALID_CREDENTIAL);
         }
     }
 }
