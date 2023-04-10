@@ -1,0 +1,30 @@
+spring:
+  jackson:
+    # snake case style for response json
+    property-naming-strategy: SNAKE_CASE
+    default-property-inclusion: non_null
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://106.15.1.178/l23o6
+    username: root
+    password: openpose
+
+  jpa:
+    show-sql: true
+    database: mysql
+    hibernate:
+      ddl-auto: update
+
+# sa-token:
+#   token-name: token
+#   # 30 days
+#   timeout: 2592000
+#   # no expiration
+#   activity-timeout: -1
+#   # multi login
+#   is-concurrent: true
+#   is-share: true
+#   token-style: uuid
+#   is-log: true
+#   is-read-cookie: false
