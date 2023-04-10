@@ -1,7 +1,6 @@
 package org.fffd.l23o6.pojo.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.annotations.ApiModel;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
@@ -12,7 +11,6 @@ import org.fffd.l23o6.exception.ErrorType;
 
 @Data
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@ApiModel(value = "通用响应")
 public class Response<T> {
     @Schema(description = "响应码", required = true)
     private int code;
