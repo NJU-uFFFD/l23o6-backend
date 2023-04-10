@@ -1,15 +1,15 @@
 package org.fffd.l23o6.controller;
 
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import lombok.RequiredArgsConstructor;
 import cn.dev33.satoken.stp.StpUtil;
-import org.fffd.l23o6.service.UserService;
-import org.fffd.l23o6.pojo.Response;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.fffd.l23o6.pojo.LoginRequest;
+import org.fffd.l23o6.pojo.Response;
+import org.fffd.l23o6.service.UserService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v1/")
@@ -18,7 +18,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("session")
-    public Response<?> login(@RequestBody LoginRequest request) {
+    public Response<?> login(@Valid @RequestBody LoginRequest request) {
         try {
             userService.login(request.getUsername(), request.getPassword());
             StpUtil.login(request.getUsername());
