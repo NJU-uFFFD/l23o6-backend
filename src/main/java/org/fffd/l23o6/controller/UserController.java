@@ -7,6 +7,7 @@ import org.fffd.l23o6.pojo.vo.Response;
 import org.fffd.l23o6.pojo.vo.user.LoginRequest;
 import org.fffd.l23o6.pojo.vo.user.RegisterRequest;
 import org.fffd.l23o6.service.UserService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final UserService userService;
 
+    @CrossOrigin
     @PostMapping("session")
     public Response<?> login(@Valid @RequestBody LoginRequest request) {
         // Throws BizException if auth failed.
@@ -27,6 +29,7 @@ public class UserController {
         return Response.success();
     }
 
+    @CrossOrigin
     @PostMapping("user")
     public Response<?> register(@Valid @RequestBody RegisterRequest request) {
         // Throws BizException if register failed.
