@@ -6,9 +6,9 @@ spring:
 
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://106.15.1.178/l23o6
+    url: jdbc:mariadb://util.lyc0w0.eu.org/l23o6
     username: root
-    password: openpose
+    password: 211250076
 
   jpa:
     show-sql: true
