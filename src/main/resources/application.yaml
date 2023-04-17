@@ -2,7 +2,7 @@ spring:
   jackson:
     # snake case style for response json
     property-naming-strategy: SNAKE_CASE
-    default-property-inclusion: non_null
+    default-property-inclusion: NON_NULL
 
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
