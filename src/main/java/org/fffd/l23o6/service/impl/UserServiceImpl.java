@@ -1,9 +1,9 @@
 package org.fffd.l23o6.service.impl;
 
+import io.github.lyc8503.spring.starter.incantation.exception.BizException;
 import lombok.RequiredArgsConstructor;
 import org.fffd.l23o6.dao.UserDao;
-import org.fffd.l23o6.exception.BizException;
-import org.fffd.l23o6.exception.ErrorType;
+import org.fffd.l23o6.exception.BizError;
 import org.fffd.l23o6.pojo.entity.UserEntity;
 import org.fffd.l23o6.service.UserService;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
         UserEntity user = userDao.findByUsername(username);
 
         if (user != null) {
-            throw new BizException(ErrorType.USERNAME_EXISTS);
+            throw new BizException(BizError.USERNAME_EXISTS);
         }
 
         userDao.save(UserEntity.builder().username(username).password(password).build());
@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     public void login(String username, String password) {
         UserEntity user = userDao.findByUsername(username);
         if (user == null || !user.getPassword().equals(password)) {
-            throw new BizException(ErrorType.INVALID_CREDENTIAL);
+            throw new BizException(BizError.INVALID_CREDENTIAL);
         }
     }
 }

@@ -1,9 +1,9 @@
 package org.fffd.l23o6.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
+import io.github.lyc8503.spring.starter.incantation.pojo.CommonResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.fffd.l23o6.pojo.vo.Response;
 import org.fffd.l23o6.pojo.vo.user.LoginRequest;
 import org.fffd.l23o6.pojo.vo.user.RegisterRequest;
 import org.fffd.l23o6.service.UserService;
@@ -19,19 +19,19 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("session")
-    public Response<?> login(@Valid @RequestBody LoginRequest request) {
+    public CommonResponse<?> login(@Valid @RequestBody LoginRequest request) {
         // Throws BizException if auth failed.
         userService.login(request.getUsername(), request.getPassword());
 
         StpUtil.login(request.getUsername());
-        return Response.success();
+        return CommonResponse.success();
     }
 
     @PostMapping("user")
-    public Response<?> register(@Valid @RequestBody RegisterRequest request) {
+    public CommonResponse<?> register(@Valid @RequestBody RegisterRequest request) {
         // Throws BizException if register failed.
         userService.register(request.getUsername(), request.getPassword());
 
-        return Response.success();
+        return CommonResponse.success();
     }
 }

@@ -1,12 +1,16 @@
+
+
 spring:
   jackson:
     # snake case style for response json
-    property-naming-strategy: SNAKE_CASE
     default-property-inclusion: NON_NULL
+    property-naming-strategy: SNAKE_CASE
+    serialization:
+      write-dates-as-timestamps: true
 
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://util.lyc0w0.eu.org/l23o6
+    url: jdbc:mariadb://114.212.99.186/l23o6
     username: root
     password: 211250076
 
@@ -16,6 +20,13 @@ spring:
     hibernate:
       ddl-auto: create-drop
 
+  application:
+    name: user-service
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://114.212.100.250:30002/eureka/
 
 # sa-token:
 #   token-name: token
