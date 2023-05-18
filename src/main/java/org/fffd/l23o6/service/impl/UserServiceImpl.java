@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void login(String username, String password) {
         UserEntity user = userDao.findByUsername(username);
-        if (user == null || BCrypt.checkpw(password, user.getPassword())) {
+        if (user == null || !BCrypt.checkpw(password, user.getPassword())) {
             throw new BizException(BizError.INVALID_CREDENTIAL);
         }
     }
