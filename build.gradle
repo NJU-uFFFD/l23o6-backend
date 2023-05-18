@@ -53,6 +53,10 @@ dependencies {
     // Eureka client
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.0.1'
 
+    // Mapper
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+    implementation 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+
 }
 
 tasks.named('test') {

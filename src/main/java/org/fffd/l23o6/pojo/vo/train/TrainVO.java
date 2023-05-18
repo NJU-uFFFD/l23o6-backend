@@ -16,8 +16,8 @@ public class TrainVO {
         private Integer count;
         private Integer price;
     }
-    private Long trainId;
-    private String trainName;
+    private Long id;
+    private String name;
     private String startStation;
     private String endStation;
     private Date departureTime;
