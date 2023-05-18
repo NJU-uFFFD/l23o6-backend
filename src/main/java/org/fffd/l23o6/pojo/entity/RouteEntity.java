@@ -8,32 +8,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
-@Table(name = "user1")  // table name "user" is a reserved word in H2
+@Table
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserEntity {
+public class RouteEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
-    @Column(unique = true)
-    private String username;
-    @NotNull
-    private String password;
-
     private String name;
-    private String phone;
-    private String type;
-    private String idn;
+
+    private List<Integer> stationIds;
 
     @CreationTimestamp
     private Date createdAt;

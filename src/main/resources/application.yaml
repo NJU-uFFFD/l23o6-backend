@@ -9,14 +9,14 @@ spring:
       write-dates-as-timestamps: true
 
   datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://114.212.99.186/l23o6
-    username: root
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://114.212.99.186:5432/l23o6
+    username: postgres
     password: 211250076
 
   jpa:
     show-sql: true
-    database: mysql
+    database: postgresql
     hibernate:
       ddl-auto: create-drop
 
