@@ -25,7 +25,7 @@ public class TrainController {
     }
 
     @GetMapping("train/{trainId}")
-    public CommonResponse<TrainVO> getTrain(@PathVariable Integer trainId) {
+    public CommonResponse<TrainVO> getTrain(@PathVariable Long trainId) {
         return CommonResponse.success(new TrainVO(1L,"1","1","1",new Date(System.currentTimeMillis()),new Date(System.currentTimeMillis()),false,new ArrayList<TicketInfo>()));
     }
 }
