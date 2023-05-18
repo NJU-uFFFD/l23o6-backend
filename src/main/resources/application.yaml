@@ -28,7 +28,7 @@ eureka:
     service-url:
       defaultZone: http://114.212.100.250:30002/eureka/
 
-# sa-token:
+sa-token:
 #   token-name: token
 #   # 30 days
 #   timeout: 2592000
@@ -37,6 +37,5 @@ eureka:
 #   # multi login
 #   is-concurrent: true
 #   is-share: true
-#   token-style: uuid
-#   is-log: true
-#   is-read-cookie: false
+  token-style: uuid
+  is-log: true

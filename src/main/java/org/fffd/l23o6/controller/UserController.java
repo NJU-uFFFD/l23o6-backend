@@ -4,13 +4,12 @@ import cn.dev33.satoken.stp.StpUtil;
 import io.github.lyc8503.spring.starter.incantation.pojo.CommonResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.fffd.l23o6.mapper.UserMapper;
 import org.fffd.l23o6.pojo.vo.user.LoginRequest;
 import org.fffd.l23o6.pojo.vo.user.RegisterRequest;
+import org.fffd.l23o6.pojo.vo.user.UserVO;
 import org.fffd.l23o6.service.UserService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1/")
@@ -33,5 +32,17 @@ public class UserController {
         userService.register(request.getUsername(), request.getPassword());
 
         return CommonResponse.success();
+    }
+
+    @DeleteMapping("session")
+    public CommonResponse<?> logout() {
+        StpUtil.checkLogin();
+        return CommonResponse.success(204);
+    }
+
+    @GetMapping("user")
+    public CommonResponse<UserVO> userInfo() {
+        StpUtil.checkLogin();
+        return CommonResponse.success(UserMapper.INSTANCE.toUserVO(userService.findByUserName(String.valueOf(StpUtil.getLoginId()))));
     }
 }
