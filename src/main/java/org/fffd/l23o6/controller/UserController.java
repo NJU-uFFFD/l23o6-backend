@@ -5,6 +5,7 @@ import io.github.lyc8503.spring.starter.incantation.pojo.CommonResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.fffd.l23o6.mapper.UserMapper;
+import org.fffd.l23o6.pojo.vo.user.EditUserInfoRequest;
 import org.fffd.l23o6.pojo.vo.user.LoginRequest;
 import org.fffd.l23o6.pojo.vo.user.RegisterRequest;
 import org.fffd.l23o6.pojo.vo.user.UserVO;
@@ -44,5 +45,12 @@ public class UserController {
     public CommonResponse<UserVO> userInfo() {
         StpUtil.checkLogin();
         return CommonResponse.success(UserMapper.INSTANCE.toUserVO(userService.findByUserName(String.valueOf(StpUtil.getLoginId()))));
+    }
+
+    @PutMapping("user")
+    public CommonResponse<?> editInfo(@Valid @RequestBody EditUserInfoRequest request) {
+        StpUtil.checkLogin();
+        userService.editInfo(StpUtil.getLoginIdAsString(), request.getName(), request.getIdn(), request.getPhone(), request.getType());
+        return CommonResponse.success();
     }
 }

@@ -2,6 +2,7 @@ package org.fffd.l23o6.service.impl;
 
 import cn.dev33.satoken.secure.BCrypt;
 import io.github.lyc8503.spring.starter.incantation.exception.BizException;
+import io.github.lyc8503.spring.starter.incantation.exception.CommonErrorType;
 import lombok.RequiredArgsConstructor;
 import org.fffd.l23o6.dao.UserDao;
 import org.fffd.l23o6.exception.BizError;
@@ -37,5 +38,14 @@ public class UserServiceImpl implements UserService {
         if (user == null || !BCrypt.checkpw(password, user.getPassword())) {
             throw new BizException(BizError.INVALID_CREDENTIAL);
         }
+    }
+
+    @Override
+    public void editInfo(String username, String name, String idn, String phone, String type){
+        UserEntity user = userDao.findByUsername(username);
+        if(user == null){
+            throw new BizException(CommonErrorType.ILLEGAL_ARGUMENTS, "用户不存在");
+        }
+        userDao.save(user.setIdn(idn).setName(name).setPhone(phone).setType(type));
     }
 }

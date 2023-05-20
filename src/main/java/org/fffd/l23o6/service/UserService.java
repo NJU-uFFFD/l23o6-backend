@@ -7,4 +7,5 @@ public interface UserService {
     void register(String username, String password, String name, String idn, String phone, String type);
 
     UserEntity findByUserName(String username);
+    void editInfo(String username, String name, String idn, String phone, String type);
 }
