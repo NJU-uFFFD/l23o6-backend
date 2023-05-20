@@ -10,7 +10,9 @@ import lombok.experimental.Accessors;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -33,7 +35,8 @@ public class TrainEntity {
     private Long routeId;
 
     @NotNull
-    private Boolean[][] seats;
+    @Column(name = "seats",columnDefinition = "boolean[][]")
+    private boolean[][] seats;
 
     @NotNull
     private Integer trainType;
@@ -42,13 +45,13 @@ public class TrainEntity {
     private String date; 
 
     @NotNull
-    private Date[] arrivalTimes;
+    private List<Date> arrivalTimes;
 
     @NotNull
-    private Date[] departureTimes;
+    private List<Date> departureTimes;
 
     @NotNull
-    private String[] extraInfos;
+    private List<String> extraInfos;
 
     @CreationTimestamp
     private Date createdAt;

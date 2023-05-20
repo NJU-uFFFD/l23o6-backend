@@ -5,12 +5,14 @@ import java.util.ArrayList;
 
 import io.github.lyc8503.spring.starter.incantation.pojo.CommonResponse;
 import org.fffd.l23o6.pojo.vo.PagedResult;
+import org.fffd.l23o6.pojo.vo.train.AddTrainRequest;
 import org.fffd.l23o6.pojo.vo.train.ListTrainRequest;
 import org.fffd.l23o6.pojo.vo.train.TrainVO;
 import org.fffd.l23o6.pojo.vo.train.TrainVO.TicketInfo;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,5 +31,10 @@ public class TrainController {
     @GetMapping("train/{trainId}")
     public CommonResponse<TrainVO> getTrain(@PathVariable Long trainId) {
         return CommonResponse.success(new TrainVO(1L,"1","1","1",new Date(System.currentTimeMillis()),new Date(System.currentTimeMillis()),false,new ArrayList<TicketInfo>()));
+    }
+
+    @PostMapping("train")
+    public CommonResponse<?> addTrain(@Valid @RequestParam AddTrainRequest request){
+        return CommonResponse.success();
     }
 }
