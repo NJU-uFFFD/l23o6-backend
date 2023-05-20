@@ -12,8 +12,9 @@ public class AdminTrainVO {
     private Long id;
     private String name;
     private Long routeId;
-    private List<String> stationName;
-    private Date departureTime;
-    private Date arrivalTime;
-    private Boolean isLate;
+    private List<String> stationNames;
+    private String date;
+    private List<Date> departureTimes;
+    private List<Date> arrivalTimes;
+    private List<String> extraInfos;
 }
