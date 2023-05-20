@@ -15,14 +15,15 @@ public class UserServiceImpl implements UserService {
     private final UserDao userDao;
 
     @Override
-    public void register(String username, String password) {
+    public void register(String username, String password, String name, String idn, String phone, String type) {
         UserEntity user = userDao.findByUsername(username);
 
         if (user != null) {
             throw new BizException(BizError.USERNAME_EXISTS);
         }
 
-        userDao.save(UserEntity.builder().username(username).password(BCrypt.hashpw(password)).build());
+        userDao.save(UserEntity.builder().username(username).password(BCrypt.hashpw(password))
+                .name(name).idn(idn).phone(phone).type(type).build());
     }
 
     @Override
