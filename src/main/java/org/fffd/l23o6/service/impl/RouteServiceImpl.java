@@ -30,11 +30,11 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public void editRoute(Long id, List<Integer> stationIds) {
+    public void editRoute(Long id, String name, List<Integer> stationIds) {
         if (routeDao.findById(id).isEmpty()) {
             throw new BizException(CommonErrorType.ILLEGAL_ARGUMENTS, "该路线不存在");
         }
 
-        routeDao.save(routeDao.findById(id).get().setStationIds(stationIds));
+        routeDao.save(routeDao.findById(id).get().setStationIds(stationIds).setName(name));
     }
 }

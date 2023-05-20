@@ -9,7 +9,8 @@ import lombok.Getter;
 public enum BizError implements ErrorType {
 
     USERNAME_EXISTS(200001, "用户名已存在", 400),
-    INVALID_CREDENTIAL(200002, "用户名或密码错误", 400);
+    INVALID_CREDENTIAL(200002, "用户名或密码错误", 400),
+    STATIONNAME_EXISTS(200003, "同名站点已存在", 400);
 
 
     final int code;

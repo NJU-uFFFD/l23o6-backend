@@ -4,12 +4,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.fffd.l23o6.dao.StationDao;
+import org.fffd.l23o6.exception.BizError;
 import org.fffd.l23o6.mapper.StationMapper;
 import org.fffd.l23o6.pojo.entity.StationEntity;
 import org.fffd.l23o6.pojo.vo.station.StationVO;
 import org.fffd.l23o6.service.StationService;
 import org.springframework.stereotype.Service;
 
+import io.github.lyc8503.spring.starter.incantation.exception.BizException;
+import io.github.lyc8503.spring.starter.incantation.exception.CommonErrorType;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -26,6 +29,19 @@ public class StationServiceImpl implements StationService{
     }
     @Override
     public void addStation(String name){
+        StationEntity entity = stationDao.findByName(name);
+        if(entity!=null){
+            throw new BizException(BizError.STATIONNAME_EXISTS);
+        }
         stationDao.save(StationEntity.builder().name(name).build());
+    }
+    @Override
+    public void editStation(Long id, String name){
+        if (stationDao.findById(id).isEmpty()) {
+            throw new BizException(CommonErrorType.ILLEGAL_ARGUMENTS, "该路线不存在");
+        }
+        StationEntity entity = stationDao.findById(id).get();
+        entity.setName(name);
+        stationDao.save(entity);
     }
 }

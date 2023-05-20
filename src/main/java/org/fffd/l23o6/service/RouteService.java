@@ -8,6 +8,6 @@ public interface RouteService {
     void addRoute(String name, List<Integer> stationIds);
     List<RouteVO> listRoutes();
 
-    void editRoute(Long id, List<Integer> stationIds);
+    void editRoute(Long id, String name, List<Integer> stationIds);
 
 }
