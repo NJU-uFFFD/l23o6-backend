@@ -8,6 +8,7 @@ import org.fffd.l23o6.pojo.vo.PagedResult;
 import org.fffd.l23o6.pojo.vo.train.ListTrainRequest;
 import org.fffd.l23o6.pojo.vo.train.TrainVO;
 import org.fffd.l23o6.pojo.vo.train.TrainVO.TicketInfo;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 @RestController
 @RequestMapping("/v1/")
 public class TrainController {
