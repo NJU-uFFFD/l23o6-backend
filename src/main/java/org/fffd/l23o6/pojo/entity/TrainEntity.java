@@ -23,6 +23,24 @@ import java.util.List;
 @NoArgsConstructor
 @Accessors(chain = true)
 public class TrainEntity {
+    public enum TrainType {
+        HIGH_SPEED("高铁"), NORMAL_SPEED("普通列车");
+        private String text;
+        TrainType(String text){
+            this.text=text;
+        }
+        public String getText() {
+            return this.text;
+        }
+        public static TrainType fromString(String text) {
+            for (TrainType b : TrainType.values()) {
+                if (b.text.equalsIgnoreCase(text)) {
+                    return b;
+                }
+            }
+            return null;
+        }
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +57,7 @@ public class TrainEntity {
     private boolean[][] seats;
 
     @NotNull
-    private Integer trainType;
+    private TrainType trainType;
 
     @NotNull
     private String date; 

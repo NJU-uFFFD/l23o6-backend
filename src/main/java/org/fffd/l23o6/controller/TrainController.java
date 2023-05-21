@@ -6,9 +6,6 @@ import java.util.ArrayList;
 
 import io.github.lyc8503.spring.starter.incantation.pojo.CommonResponse;
 
-import org.fffd.l23o6.dao.TrainDao;
-import org.fffd.l23o6.mapper.TrainMapper;
-import org.fffd.l23o6.pojo.vo.PagedResult;
 import org.fffd.l23o6.pojo.vo.train.AddTrainRequest;
 import org.fffd.l23o6.pojo.vo.train.AdminTrainVO;
 import org.fffd.l23o6.pojo.vo.train.ListTrainRequest;
@@ -47,7 +44,7 @@ public class TrainController {
 
     @PostMapping("admin/train")
     public CommonResponse<?> addTrain(@Valid @RequestBody AddTrainRequest request){
-        trainService.addTrain(request.getName(), request.getRouteId(), 0, request.getDate(), request.getArrivalTimes(), request.getDepartureTimes());
+        trainService.addTrain(request.getName(), request.getRouteId(), request.getTrainType(), request.getDate(), request.getArrivalTimes(), request.getDepartureTimes());
         return CommonResponse.success();
     }
 

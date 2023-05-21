@@ -23,8 +23,9 @@ public class AddTrainRequest {
     private Long routeId;
 
     @Schema(description = "车类型", required = true)
+    @Pattern(regexp = "^(高铁|普通列车)$", message = "车类型目前只能为高铁或普通列车")
     @NotNull
-    private Integer trainType;
+    private String trainType;
 
     @Schema(description = "车次日期,YYYY-MM-DD", required = true)
     @NotNull
