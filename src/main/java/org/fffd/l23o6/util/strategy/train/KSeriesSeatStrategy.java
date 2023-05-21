@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 
 
 public class KSeriesSeatStrategy extends TrainSeatStrategy {
+    public static final KSeriesSeatStrategy INSTANCE = new KSeriesSeatStrategy();
      
     private final Map<Integer, String> SOFT_SLEEPER_SEAT_MAP = new HashMap<>();
     private final Map<Integer, String> HARD_SLEEPER_SEAT_MAP = new HashMap<>();
@@ -22,10 +23,8 @@ public class KSeriesSeatStrategy extends TrainSeatStrategy {
         put(KSeriesSeatType.HARD_SEAT, HARD_SEAT_MAP);
     }};
 
-    private final int NO_SEAT = 0;
 
-
-    public KSeriesSeatStrategy() {
+    private KSeriesSeatStrategy() {
 
         int counter = 0;
 
@@ -33,7 +32,7 @@ public class KSeriesSeatStrategy extends TrainSeatStrategy {
             SOFT_SLEEPER_SEAT_MAP.put(counter++, s);
         }
 
-        for (String s : Arrays.asList("硬卧1号上铺", "硬卧2号下铺", "硬卧3号上铺", "硬卧4号上铺", "硬卧5号上铺", "硬卧6号下铺", "硬卧7号上铺", "硬卧8号上铺", "硬卧9号上铺", "硬卧10号上铺")) {
+        for (String s : Arrays.asList("硬卧1号上铺", "硬卧2号中铺", "硬卧3号下铺", "硬卧4号上铺", "硬卧5号中铺", "硬卧6号下铺", "硬卧7号上铺", "硬卧8号中铺", "硬卧9号下铺", "硬卧10号上铺", "硬卧11号中铺", "硬卧12号下铺")) {
             HARD_SLEEPER_SEAT_MAP.put(counter++, s);
         }
 
@@ -44,10 +43,6 @@ public class KSeriesSeatStrategy extends TrainSeatStrategy {
         for (String s : Arrays.asList("3车1座", "3车2座", "3车3座", "3车4座", "3车5座", "3车6座", "3车7座", "3车8座", "3车9座", "3车10座", "4车1座", "4车2座", "4车3座", "4车4座", "4车5座", "4车6座", "4车7座", "4车8座", "4车9座", "4车10座")) {
             HARD_SEAT_MAP.put(counter++, s);
         }
-
-
-
-
     }
 
     public enum KSeriesSeatType implements SeatType {
@@ -56,35 +51,53 @@ public class KSeriesSeatStrategy extends TrainSeatStrategy {
 
 
     public @Nullable String allocSeat(int startStationIndex, int endStationIndex, KSeriesSeatType type, boolean[][] seatMap) {
-        
-        switch (type) {
-            case SOFT_SLEEPER_SEAT:
-                for (Map.Entry<Integer, String> entry : SOFT_SLEEPER_SEAT_MAP.entrySet()) {
-                    
-                }
-                return "";
-            case HARD_SLEEPER_SEAT:
-                for (Map.Entry<Integer, String> entry : HARD_SLEEPER_SEAT_MAP.entrySet()) {
-                    
-                }
-                return "";
-            case SOFT_SEAT:
-                for (Map.Entry<Integer, String> entry : SOFT_SEAT_MAP.entrySet()) {
-                    
-                }
-                return "";
-            case HARD_SEAT:
-                for (Map.Entry<Integer, String> entry : HARD_SEAT_MAP.entrySet()) {
-                    
-                }
-                break;
-            case NO_SEAT:
+        //endStationIndex - 1 = upper bound
+        int maxScore = -1;
+        String result = null;
+        int resultIndex = -1;
+        Map<Integer,String> map = TYPE_MAP.get(type);
+        if(map == null){
+            if(type == KSeriesSeatType.NO_SEAT){
                 return "无座";
-            default:
-                throw new RuntimeException("内部错误：未知的座位类型");
+            }
+            else throw new RuntimeException("内部错误：未知的座位类型");
         }
-
-        return null;
+        for (Map.Entry<Integer, String> entry : map.entrySet()) {
+            int seatNo = entry.getKey();
+            boolean available = true;
+            for(int i = startStationIndex; i <= endStationIndex - 1; i++){
+                if(seatMap[i][seatNo]){
+                    available = false;
+                    break;
+                }
+            }
+            if(available){
+                int score = 0;
+                for(int i=startStationIndex-1;i>=0;i--){
+                    if(seatMap[i][seatNo]){
+                        score += seatMap.length - (startStationIndex - i);
+                        break;
+                    }
+                }
+                for(int i=endStationIndex;i<seatMap.length;i++){
+                    if(seatMap[i][seatNo]){
+                        score += seatMap.length - (i - endStationIndex);
+                        break;
+                    }
+                }
+                if(score > maxScore){
+                    maxScore = score;
+                    result = entry.getValue();
+                    resultIndex = seatNo;
+                }
+            }
+        }
+        if(resultIndex != -1){
+            for(int i=startStationIndex; i<=endStationIndex-1; i++){
+                seatMap[i][resultIndex] = true;
+            }
+        }
+        return result;
     }
 
     public Map<KSeriesSeatType, Integer> getLeftSeatCount(int startStationIndex, int endStationIndex, boolean[][] seatMap) {
