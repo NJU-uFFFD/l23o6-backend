@@ -18,8 +18,8 @@ public class TrainVO {
     }
     private Long id;
     private String name;
-    private String startStation;
-    private String endStation;
+    private Long startStation;
+    private Long endStation;
     private Date departureTime;
     private Date arrivalTime;
     private Boolean isLate;

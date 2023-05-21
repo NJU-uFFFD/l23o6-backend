@@ -26,7 +26,7 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     public List<RouteVO> listRoutes() {
-        return routeDao.findAll().stream().map(RouteMapper.INSTANCE::toStationVO).collect(Collectors.toList());
+        return routeDao.findAll().stream().map(RouteMapper.INSTANCE::toRouteVO).collect(Collectors.toList());
     }
 
     @Override

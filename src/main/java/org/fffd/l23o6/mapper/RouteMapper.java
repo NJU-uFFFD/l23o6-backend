@@ -9,5 +9,5 @@ import org.mapstruct.factory.Mappers;
 public interface RouteMapper {
     RouteMapper INSTANCE = Mappers.getMapper(RouteMapper.class);
 
-    RouteVO toStationVO(RouteEntity routeEntity);
+    RouteVO toRouteVO(RouteEntity routeEntity);
 }
