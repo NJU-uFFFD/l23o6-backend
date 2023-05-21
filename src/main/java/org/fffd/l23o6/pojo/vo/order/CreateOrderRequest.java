@@ -41,10 +41,6 @@ public class CreateOrderRequest{
     @NotNull
     private Long trainId;
 
-    @Schema(description = "乘车人", required = true)
-    @NotNull
-    private Passenger passenger;
-
     @Schema(description = "出发站id", required = true)
     @NotNull
     private Long departureStationId;

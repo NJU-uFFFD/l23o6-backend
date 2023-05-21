@@ -14,6 +14,7 @@ import org.fffd.l23o6.pojo.vo.train.AdminTrainVO;
 import org.fffd.l23o6.pojo.vo.train.ListTrainRequest;
 import org.fffd.l23o6.pojo.vo.train.TrainVO;
 import org.fffd.l23o6.pojo.vo.train.TrainVO.TicketInfo;
+import org.fffd.l23o6.service.TrainService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,20 +32,23 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/v1/")
 @AllArgsConstructor
 public class TrainController {
-    private final TrainDao trainDao;
+
+    private final TrainService trainService;
 
     @GetMapping("train")
-    public CommonResponse<PagedResult<TrainVO>> listTrains(@Valid @RequestParam ListTrainRequest request) {
+    public CommonResponse<TrainVO> listTrains(@Valid @RequestParam ListTrainRequest request) {
+        trainService.listTrains(request.getStartCity(), request.getEndCity(), request.getDate());
         return null;
     }
 
     @GetMapping("train/{trainId}")
     public CommonResponse<TrainVO> getTrain(@PathVariable Long trainId) {
-        return CommonResponse.success(new TrainVO(1L,"1",1L,1L,new Date(System.currentTimeMillis()),new Date(System.currentTimeMillis()),false,new ArrayList<TicketInfo>()));
+        return CommonResponse.success(new TrainVO(1L,"1",1L,1L,new Date(System.currentTimeMillis()),new Date(System.currentTimeMillis()),new ArrayList<TicketInfo>()));
     }
 
     @PostMapping("train")
     public CommonResponse<?> addTrain(@Valid @RequestBody AddTrainRequest request){
+        trainService.addTrain(request.getName(), request.getRouteId(), 0, request.getDate(), request.getArrivalTimes(), request.getDepartureTimes());
         return CommonResponse.success();
     }
 
@@ -53,7 +57,7 @@ public class TrainController {
         return null;
     }
 
-    @PostMapping("admin/train/{trainId}")
+    @GetMapping("admin/train/{trainId}")
     public CommonResponse<AdminTrainVO> getTrainAdmin(@PathVariable Long trainId){
         return CommonResponse.success();
     }

@@ -20,7 +20,7 @@ public class TrainServiceImpl implements TrainService {
         return null;
     }
     @Override
-    public Page<TrainVO> listTrains(Integer page, Integer pageSize, String startCity, String endCity, String date){
+    public Page<TrainVO> listTrains(String startCity, String endCity, String date) {
         return null;
     }
     @Override

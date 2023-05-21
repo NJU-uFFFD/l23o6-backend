@@ -34,14 +34,14 @@ public class StationController {
         return CommonResponse.success(stationService.getStation(stationId));
     }
 
-    @PostMapping("station")
+    @PostMapping("admin/station")
     public CommonResponse<?> addStation(@Valid @RequestBody AddStationRequest request) {
         // Throws BizException if add failed.
         stationService.addStation(request.getName());
         return CommonResponse.success();
     }
 
-    @PutMapping("station/{stationId}")
+    @PutMapping("admin/station/{stationId}")
     public CommonResponse<?> editStation(@PathVariable("stationId") Long stationId, @Valid @RequestBody AddStationRequest request) {
         stationService.editStation(stationId, request.getName());
         return CommonResponse.success();

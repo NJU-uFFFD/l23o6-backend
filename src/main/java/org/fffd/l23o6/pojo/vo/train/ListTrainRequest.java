@@ -1,8 +1,8 @@
 package org.fffd.l23o6.pojo.vo.train;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
+// import jakarta.validation.constraints.Max;
+// import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
@@ -10,14 +10,14 @@ import lombok.Data;
 @Data
 @Schema(description = "列出车次请求")
 public class ListTrainRequest {
-    @Schema(description = "页码", required = false)
-    @Min(value = 1, message = "页码范围错误")
-    private Integer page = 1;
+    // @Schema(description = "页码", required = false)
+    // @Min(value = 1, message = "页码范围错误")
+    // private Integer page = 1;
 
-    @Schema(description = "每页条数", required = false)
-    @Min(value = 1, message = "每页条数范围错误")
-    @Max(value = 100, message = "每页条数范围错误")
-    private Integer pageSize = 20;
+    // @Schema(description = "每页条数", required = false)
+    // @Min(value = 1, message = "每页条数范围错误")
+    // @Max(value = 100, message = "每页条数范围错误")
+    // private Integer pageSize = 20;
 
     @Schema(description = "起点城市", required = true)
     @NotNull

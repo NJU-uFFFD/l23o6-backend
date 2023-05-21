@@ -8,6 +8,6 @@ import org.springframework.data.domain.Page;
 
 public interface TrainService {
     public TrainVO getTrain(Long trainId);
-    public Page<TrainVO> listTrains(Integer page, Integer pageSize, String startCity, String endCity, String date);
+    public Page<TrainVO> listTrains(String startCity, String endCity, String date);
     public void addTrain(String name, Long routeId, Integer type, String date, List<Date> arrivalTimes, List<Date> departureTimes);
 }

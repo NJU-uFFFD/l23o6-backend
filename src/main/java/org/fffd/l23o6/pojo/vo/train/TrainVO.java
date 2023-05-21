@@ -22,6 +22,5 @@ public class TrainVO {
     private Long endStation;
     private Date departureTime;
     private Date arrivalTime;
-    private Boolean isLate;
     private List<TicketInfo> ticketInfo;
 }

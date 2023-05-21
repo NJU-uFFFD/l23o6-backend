@@ -17,23 +17,23 @@ import java.util.List;
 public class RouteController {
     private final RouteService routeService;
 
-    @PostMapping("route")
+    @PostMapping("admin/route")
     public CommonResponse<?> addRoute(@Valid @RequestBody AddRouteRequest request) {
         routeService.addRoute(request.getName(), request.getStationIds());
         return CommonResponse.success();
     }
 
-    @GetMapping("route")
+    @GetMapping("admin/route")
     public CommonResponse<List<RouteVO>> getRoutes() {
         return CommonResponse.success(routeService.listRoutes());
     }
 
-    @PutMapping("route/{routeId}")
-    public CommonResponse<?> getRoute(@PathVariable("routeId") Long routeId) {
+    @GetMapping("admin/route/{routeId}")
+    public CommonResponse<RouteVO> getRoute(@PathVariable("routeId") Long routeId) {
         return CommonResponse.success(routeService.getRoute(routeId));
     }
 
-    @PutMapping("route/{routeId}")
+    @PutMapping("admin/route/{routeId}")
     public CommonResponse<?> editRoute(@PathVariable("routeId") Long routeId, @Valid @RequestBody AddRouteRequest request) {
         routeService.editRoute(routeId, request.getName(), request.getStationIds());
         return CommonResponse.success();
