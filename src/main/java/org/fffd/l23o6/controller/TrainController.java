@@ -45,7 +45,7 @@ public class TrainController {
         return CommonResponse.success(new TrainVO(1L,"1",1L,1L,new Date(System.currentTimeMillis()),new Date(System.currentTimeMillis()),new ArrayList<TicketInfo>()));
     }
 
-    @PostMapping("train")
+    @PostMapping("admin/train")
     public CommonResponse<?> addTrain(@Valid @RequestBody AddTrainRequest request){
         trainService.addTrain(request.getName(), request.getRouteId(), 0, request.getDate(), request.getArrivalTimes(), request.getDepartureTimes());
         return CommonResponse.success();
