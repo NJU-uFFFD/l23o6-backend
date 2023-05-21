@@ -19,13 +19,13 @@ public class ListTrainRequest {
     // @Max(value = 100, message = "每页条数范围错误")
     // private Integer pageSize = 20;
 
-    @Schema(description = "起点城市", required = true)
+    @Schema(description = "起点站", required = true)
     @NotNull
-    private String startCity;
+    private Integer startStationId;
 
-    @Schema(description = "终点城市", required = true)
+    @Schema(description = "终点站", required = true)
     @NotNull
-    private String endCity;
+    private Integer endStationId;
 
     @Schema(description = "车次日期", required = true)
     @Pattern(regexp = "^[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$", message = "日期格式错误")

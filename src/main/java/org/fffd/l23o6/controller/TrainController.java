@@ -36,9 +36,8 @@ public class TrainController {
     private final TrainService trainService;
 
     @GetMapping("train")
-    public CommonResponse<TrainVO> listTrains(@Valid @RequestParam ListTrainRequest request) {
-        trainService.listTrains(request.getStartCity(), request.getEndCity(), request.getDate());
-        return null;
+    public CommonResponse<List<TrainVO>> listTrains(@Valid @RequestParam ListTrainRequest request) {
+        return CommonResponse.success(trainService.listTrains(request.getStartStationId(), request.getEndStationId(), request.getDate()));
     }
 
     @GetMapping("train/{trainId}")
