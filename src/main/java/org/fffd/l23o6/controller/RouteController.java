@@ -29,6 +29,11 @@ public class RouteController {
     }
 
     @PutMapping("route/{routeId}")
+    public CommonResponse<?> getRoute(@PathVariable("routeId") Long routeId) {
+        return CommonResponse.success(routeService.getRoute(routeId));
+    }
+
+    @PutMapping("route/{routeId}")
     public CommonResponse<?> editRoute(@PathVariable("routeId") Long routeId, @Valid @RequestBody AddRouteRequest request) {
         routeService.editRoute(routeId, request.getName(), request.getStationIds());
         return CommonResponse.success();

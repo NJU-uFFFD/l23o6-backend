@@ -27,6 +27,7 @@ public class RouteEntity {
     private Long id;
 
     @NotNull
+    @Column(unique = true)
     private String name;
 
     private List<Integer> stationIds;

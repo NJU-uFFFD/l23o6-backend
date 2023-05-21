@@ -12,7 +12,6 @@ import org.fffd.l23o6.service.StationService;
 import org.springframework.stereotype.Service;
 
 import io.github.lyc8503.spring.starter.incantation.exception.BizException;
-import io.github.lyc8503.spring.starter.incantation.exception.CommonErrorType;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -37,9 +36,6 @@ public class StationServiceImpl implements StationService{
     }
     @Override
     public void editStation(Long id, String name){
-        if (stationDao.findById(id).isEmpty()) {
-            throw new BizException(CommonErrorType.ILLEGAL_ARGUMENTS, "该路线不存在");
-        }
         StationEntity entity = stationDao.findById(id).get();
         entity.setName(name);
         stationDao.save(entity);

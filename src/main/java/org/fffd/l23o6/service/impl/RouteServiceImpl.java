@@ -3,8 +3,6 @@ package org.fffd.l23o6.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import io.github.lyc8503.spring.starter.incantation.exception.BizException;
-import io.github.lyc8503.spring.starter.incantation.exception.CommonErrorType;
 import org.fffd.l23o6.dao.RouteDao;
 import org.fffd.l23o6.mapper.RouteMapper;
 import org.fffd.l23o6.pojo.entity.RouteEntity;
@@ -30,11 +28,13 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public void editRoute(Long id, String name, List<Integer> stationIds) {
-        if (routeDao.findById(id).isEmpty()) {
-            throw new BizException(CommonErrorType.ILLEGAL_ARGUMENTS, "该路线不存在");
-        }
+    public RouteVO getRoute(Long id) {
+        RouteEntity entity = routeDao.findById(id).get();
+        return RouteMapper.INSTANCE.toRouteVO(entity);
+    }
 
+    @Override
+    public void editRoute(Long id, String name, List<Integer> stationIds) {
         routeDao.save(routeDao.findById(id).get().setStationIds(stationIds).setName(name));
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 public interface RouteService {
     void addRoute(String name, List<Integer> stationIds);
     List<RouteVO> listRoutes();
-
+    RouteVO getRoute(Long id);
     void editRoute(Long id, String name, List<Integer> stationIds);
 
 }
