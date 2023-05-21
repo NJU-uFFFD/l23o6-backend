@@ -9,7 +9,10 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import io.hypersistence.utils.hibernate.type.array.BooleanArrayType;
 
 import java.util.Date;
 import java.util.List;
@@ -53,6 +56,7 @@ public class TrainEntity {
     private Long routeId;
 
     @NotNull
+    @Type(BooleanArrayType.class)
     @Column(name = "seats",columnDefinition = "boolean[][]")
     private boolean[][] seats;
 
