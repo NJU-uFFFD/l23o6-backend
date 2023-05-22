@@ -18,8 +18,8 @@ public class TrainVO {
     }
     private Long id;
     private String name;
-    private Long startStation;
-    private Long endStation;
+    private Long startStationId;
+    private Long endStationId;
     private Date departureTime;
     private Date arrivalTime;
     private List<TicketInfo> ticketInfo;
