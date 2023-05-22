@@ -12,6 +12,7 @@ import org.fffd.l23o6.mapper.TrainMapper;
 import org.fffd.l23o6.pojo.entity.RouteEntity;
 import org.fffd.l23o6.pojo.entity.TrainEntity;
 import org.fffd.l23o6.pojo.entity.TrainEntity.TrainType;
+import org.fffd.l23o6.pojo.vo.train.AdminTrainVO;
 import org.fffd.l23o6.pojo.vo.train.TrainVO;
 import org.fffd.l23o6.service.TrainService;
 import org.fffd.l23o6.util.strategy.train.GSeriesSeatStrategy;
@@ -33,7 +34,7 @@ public class TrainServiceImpl implements TrainService {
         return null;
     }
     @Override
-    public List<TrainVO> listTrains(Integer startStationId, Integer endStationId, String date) {
+    public List<TrainVO> listTrains(Long startStationId, Long endStationId, String date) {
 
         // First, get all routes contains [startCity, endCity]
         List<RouteEntity> routes = routeDao.findAll();
@@ -49,9 +50,25 @@ public class TrainServiceImpl implements TrainService {
             return possibleRoutes.stream().anyMatch(route -> route.getId().equals(train.getRouteId()) && train.getDate().equals(date));
         }).collect(Collectors.toList());
 
-        return possibleTrains.stream().map(TrainMapper.INSTANCE::toTrainVO).collect(Collectors.toList());
+        List<TrainVO> trainVOs = possibleTrains.stream().map(entity -> {
+            RouteEntity route = routeDao.findById(entity.getRouteId()).get();
+            TrainVO train = TrainVO.builder().id(entity.getId()).name(entity.getName())
+                .startStationId(startStationId)
+                .endStationId(endStationId)
+                .arrivalTime(entity.getArrivalTimes().get(route.getStationIds().indexOf(endStationId)))
+                .departureTime(entity.getDepartureTimes().get(route.getStationIds().indexOf(startStationId)))
+                .ticketInfo(null)
+                .build();
+            return train;
+        }).collect(Collectors.toList());
+        return trainVOs;
     }
     
+    @Override
+    public List<AdminTrainVO> listTrainsAdmin(){
+        return trainDao.findAll().stream().map(TrainMapper.INSTANCE::toAdminTrainVO).collect(Collectors.toList());
+    }
+
     @Override
     public void addTrain(String name, Long routeId, String type, String date, List<Date> arrivalTimes, List<Date> departureTimes){
         TrainEntity entity = TrainEntity.builder().name(name).routeId(routeId).trainType(TrainType.fromString(type)).date(date).arrivalTimes(arrivalTimes).departureTimes(departureTimes).build();

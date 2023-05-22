@@ -19,5 +19,5 @@ public class AddRouteRequest {
     @Schema(description = "站点列表", required = true)
     @NotNull
     @Size(min = 2, message = "路线至少包含2站")
-    private List<Integer> stationIds;
+    private List<Long> stationIds;
 }

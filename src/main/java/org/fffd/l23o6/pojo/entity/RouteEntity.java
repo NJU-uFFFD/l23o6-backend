@@ -30,7 +30,7 @@ public class RouteEntity {
     @Column(unique = true)
     private String name;
 
-    private List<Integer> stationIds;
+    private List<Long> stationIds;
 
     @CreationTimestamp
     private Date createdAt;

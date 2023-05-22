@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class RouteServiceImpl implements RouteService {
     private final RouteDao routeDao;
     @Override
-    public void addRoute(String name, List<Integer> stationIds) {
+    public void addRoute(String name, List<Long> stationIds) {
         RouteEntity route = RouteEntity.builder().name(name).stationIds(stationIds).build();
         routeDao.save(route);
     }
@@ -34,7 +34,7 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public void editRoute(Long id, String name, List<Integer> stationIds) {
+    public void editRoute(Long id, String name, List<Long> stationIds) {
         routeDao.save(routeDao.findById(id).get().setStationIds(stationIds).setName(name));
     }
 }

@@ -46,7 +46,22 @@ public class KSeriesSeatStrategy extends TrainSeatStrategy {
     }
 
     public enum KSeriesSeatType implements SeatType {
-        SOFT_SLEEPER_SEAT, HARD_SLEEPER_SEAT, SOFT_SEAT, HARD_SEAT, NO_SEAT
+        SOFT_SLEEPER_SEAT("软卧"), HARD_SLEEPER_SEAT("硬卧"), SOFT_SEAT("软座"), HARD_SEAT("硬座"), NO_SEAT("无座");
+        private String text;
+        KSeriesSeatType(String text){
+            this.text=text;
+        }
+        public String getText() {
+            return this.text;
+        }
+        public static KSeriesSeatType fromString(String text) {
+            for (KSeriesSeatType b : KSeriesSeatType.values()) {
+                if (b.text.equalsIgnoreCase(text)) {
+                    return b;
+                }
+            }
+            return null;
+        }
     }
 
 

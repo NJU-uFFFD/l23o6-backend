@@ -41,7 +41,22 @@ public class GSeriesSeatStrategy extends TrainSeatStrategy {
     }
 
     public enum GSeriesSeatType implements SeatType {
-        BUSINESS_SEAT, FIRST_CLASS_SEAT, SECOND_CLASS_SEAT, NO_SEAT
+        BUSINESS_SEAT("商务座"), FIRST_CLASS_SEAT("一等座"), SECOND_CLASS_SEAT("二等座"), NO_SEAT("无座");
+        private String text;
+        GSeriesSeatType(String text){
+            this.text=text;
+        }
+        public String getText() {
+            return this.text;
+        }
+        public static GSeriesSeatType fromString(String text) {
+            for (GSeriesSeatType b : GSeriesSeatType.values()) {
+                if (b.text.equalsIgnoreCase(text)) {
+                    return b;
+                }
+            }
+            return null;
+        }
     }
 
 

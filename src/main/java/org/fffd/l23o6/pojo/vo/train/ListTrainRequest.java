@@ -21,11 +21,11 @@ public class ListTrainRequest {
 
     @Schema(description = "起点站", required = true)
     @NotNull
-    private Integer startStationId;
+    private Long startStationId;
 
     @Schema(description = "终点站", required = true)
     @NotNull
-    private Integer endStationId;
+    private Long endStationId;
 
     @Schema(description = "车次日期", required = true)
     @Pattern(regexp = "^[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$", message = "日期格式错误")
