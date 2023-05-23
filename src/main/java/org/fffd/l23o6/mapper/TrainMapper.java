@@ -13,3 +13,4 @@ public interface TrainMapper {
     AdminTrainVO toAdminTrainVO(TrainEntity TrainEntity);
     TrainVO toTrainVO(TrainEntity TrainEntity);
 }
+

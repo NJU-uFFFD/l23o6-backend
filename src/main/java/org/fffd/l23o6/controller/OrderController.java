@@ -46,10 +46,10 @@ public class OrderController {
 
         switch (request.getStatus()) {
             case PAID:
-                orderService.cancelOrder(orderId);
+                orderService.payOrder(orderId);
                 break;
             case CANCELLED:
-                orderService.payOrder(orderId);
+                orderService.cancelOrder(orderId);
                 break;
             default:
                 throw new BizException(CommonErrorType.ILLEGAL_ARGUMENTS, "Invalid order status.");
