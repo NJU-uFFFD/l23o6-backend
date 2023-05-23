@@ -9,7 +9,6 @@ import org.fffd.l23o6.dao.TrainDao;
 import org.fffd.l23o6.dao.UserDao;
 import org.fffd.l23o6.enum_.order.OrderStatus;
 import org.fffd.l23o6.exception.BizError;
-import org.fffd.l23o6.mapper.OrderMapper;
 import org.fffd.l23o6.pojo.entity.OrderEntity;
 import org.fffd.l23o6.pojo.entity.RouteEntity;
 import org.fffd.l23o6.pojo.entity.TrainEntity;
@@ -55,9 +54,34 @@ public class OrderServiceImpl implements OrderService{
     }
     public List<OrderVO> listOrders(String username){
         Long userId = userDao.findByUsername(username).getId();
-        return orderDao.findByUserId(userId).stream().map(OrderMapper.INSTANCE::toOrderVO).collect(Collectors.toList());
+        return orderDao.findByUserId(userId).stream().map(order -> {
+            TrainEntity train = trainDao.findById(order.getTrainId()).get();
+            RouteEntity route = routeDao.findById(train.getRouteId()).get();
+            int startIndex = route.getStationIds().indexOf(order.getDepartureStationId());
+            int endIndex = route.getStationIds().indexOf(order.getArrivalStationId());
+            return OrderVO.builder().id(order.getId()).trainId(order.getTrainId())
+                .seat(order.getSeat()).status(order.getStatus().getText())
+                .createdAt(order.getCreatedAt())
+                .startStationId(order.getDepartureStationId())
+                .endStationId(order.getArrivalStationId())
+                .departureTime(train.getDepartureTimes().get(startIndex))
+                .arrivalTime(train.getArrivalTimes().get(endIndex))
+                .build();
+        }).collect(Collectors.toList());
     }
     public OrderVO getOrder(Long id){
-        return OrderMapper.INSTANCE.toOrderVO(orderDao.findById(id).get());
+        OrderEntity order = orderDao.findById(id).get();
+        TrainEntity train = trainDao.findById(order.getTrainId()).get();
+        RouteEntity route = routeDao.findById(train.getRouteId()).get();
+        int startIndex = route.getStationIds().indexOf(order.getDepartureStationId());
+        int endIndex = route.getStationIds().indexOf(order.getArrivalStationId());
+        return OrderVO.builder().id(order.getId()).trainId(order.getTrainId())
+            .seat(order.getSeat()).status(order.getStatus().getText())
+            .createdAt(order.getCreatedAt())
+            .startStationId(order.getDepartureStationId())
+            .endStationId(order.getArrivalStationId())
+            .departureTime(train.getDepartureTimes().get(startIndex))
+            .arrivalTime(train.getArrivalTimes().get(endIndex))
+            .build();
     }
 }

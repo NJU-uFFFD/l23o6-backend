@@ -34,7 +34,7 @@ public class TrainController {
 
     @GetMapping("train/{trainId}")
     public CommonResponse<TrainVO> getTrain(@PathVariable Long trainId) {
-        return null;
+        return CommonResponse.success(trainService.getTrain(trainId));
     }
 
     @PostMapping("admin/train")

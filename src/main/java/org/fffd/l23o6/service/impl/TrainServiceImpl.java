@@ -32,7 +32,7 @@ public class TrainServiceImpl implements TrainService {
 
     @Override
     public TrainVO getTrain(Long trainId){
-        return null;
+        return TrainMapper.INSTANCE.toTrainVO(trainDao.findById(trainId).get());
     }
     @Override
     public List<TrainVO> listTrains(Long startStationId, Long endStationId, String date) {
