@@ -14,6 +14,7 @@ import org.fffd.l23o6.pojo.entity.TrainEntity;
 import org.fffd.l23o6.pojo.entity.TrainEntity.TrainType;
 import org.fffd.l23o6.pojo.vo.train.AdminTrainVO;
 import org.fffd.l23o6.pojo.vo.train.TrainVO;
+import org.fffd.l23o6.pojo.vo.train.TicketInfo;
 import org.fffd.l23o6.service.TrainService;
 import org.fffd.l23o6.util.strategy.train.GSeriesSeatStrategy;
 import org.fffd.l23o6.util.strategy.train.KSeriesSeatStrategy;
@@ -52,12 +53,27 @@ public class TrainServiceImpl implements TrainService {
 
         List<TrainVO> trainVOs = possibleTrains.stream().map(entity -> {
             RouteEntity route = routeDao.findById(entity.getRouteId()).get();
+            List<TicketInfo> ticketInfos = new ArrayList<TicketInfo>();
+            int startStationIndex = route.getStationIds().indexOf(endStationId);
+            int endStationIndex = route.getStationIds().indexOf(startStationId);
+            switch(entity.getTrainType()){
+                case HIGH_SPEED:
+                    GSeriesSeatStrategy.INSTANCE.getLeftSeatCount(startStationIndex, endStationIndex, entity.getSeats()).forEach((type, count)->{
+                        ticketInfos.add(new TicketInfo(type.getText(), count, 100));
+                    });
+                    break;
+                case NORMAL_SPEED:
+                    KSeriesSeatStrategy.INSTANCE.getLeftSeatCount(startStationIndex, endStationIndex, entity.getSeats()).forEach((type, count)->{
+                        ticketInfos.add(new TicketInfo(type.getText(), count, 100));
+                    });
+                    break;
+            }
             TrainVO train = TrainVO.builder().id(entity.getId()).name(entity.getName())
                 .startStationId(startStationId)
                 .endStationId(endStationId)
-                .arrivalTime(entity.getArrivalTimes().get(route.getStationIds().indexOf(endStationId)))
-                .departureTime(entity.getDepartureTimes().get(route.getStationIds().indexOf(startStationId)))
-                .ticketInfo(null)
+                .arrivalTime(entity.getArrivalTimes().get(endStationIndex))
+                .departureTime(entity.getDepartureTimes().get(startStationIndex))
+                .ticketInfo(ticketInfos)
                 .build();
             return train;
         }).collect(Collectors.toList());

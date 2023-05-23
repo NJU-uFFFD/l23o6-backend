@@ -13,14 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class TrainVO {
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public class TicketInfo {
-        private String type;
-        private Integer count;
-        private Integer price;
-    }
     private Long id;
     private String name;
     private Long startStationId;

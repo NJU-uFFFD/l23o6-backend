@@ -27,6 +27,9 @@ public class OrderEntity {
     private Long id;
 
     @NotNull
+    private Long userId;
+
+    @NotNull
     private Long trainId;
 
     @NotNull
@@ -37,6 +40,9 @@ public class OrderEntity {
 
     @NotNull
     private OrderStatus status;
+
+    @NotNull
+    private String seat;
 
     @CreationTimestamp
     private Date createdAt;

@@ -43,11 +43,11 @@ public class CreateOrderRequest{
 
     @Schema(description = "出发站id", required = true)
     @NotNull
-    private Long departureStationId;
+    private Long startStationId;
 
     @Schema(description = "目的站id", required = true)
     @NotNull
-    private Long arrivalStationId;
+    private Long endStationId;
 
     @Schema(description = "座位类型", required = true)
     @NotNull
