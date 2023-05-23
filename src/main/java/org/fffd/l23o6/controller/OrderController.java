@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-import org.fffd.l23o6.pojo.entity.OrderEntity;
 import org.fffd.l23o6.pojo.vo.order.CreateOrderRequest;
 import org.fffd.l23o6.pojo.vo.order.OrderIdVO;
 import org.fffd.l23o6.pojo.vo.order.OrderVO;
@@ -44,7 +43,7 @@ public class OrderController {
 
     @PatchMapping("order/{orderId}")
     public CommonResponse<?> patchOrder(@PathVariable("orderId") Long orderId, @Valid @RequestBody PatchOrderRequest request) {
-        
+
         switch (request.getStatus()) {
             case PAID:
                 orderService.cancelOrder(orderId);

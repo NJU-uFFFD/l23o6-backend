@@ -95,12 +95,22 @@ public class OrderServiceImpl implements OrderService {
 
     public void cancelOrder(Long id) {
         OrderEntity order = orderDao.findById(id).get();
+
+        if (order.getStatus() == OrderStatus.COMPLETED || order.getStatus() == OrderStatus.CANCELLED) {
+            throw new BizException(BizError.ILLEAGAL_ORDER_STATUS);
+        }
+
         order.setStatus(OrderStatus.CANCELLED);
         orderDao.save(order);
     }
 
     public void payOrder(Long id) {
         OrderEntity order = orderDao.findById(id).get();
+
+        if (order.getStatus() != OrderStatus.PENDING_PAYMENT) {
+            throw new BizException(BizError.ILLEAGAL_ORDER_STATUS);
+        }
+
         order.setStatus(OrderStatus.COMPLETED);
         orderDao.save(order);
     }
