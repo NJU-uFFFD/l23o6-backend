@@ -17,7 +17,6 @@ import io.hypersistence.utils.hibernate.type.array.BooleanArrayType;
 import java.util.Date;
 import java.util.List;
 
-
 @Entity
 @Table
 @Data
@@ -28,13 +27,17 @@ import java.util.List;
 public class TrainEntity {
     public enum TrainType {
         HIGH_SPEED("高铁"), NORMAL_SPEED("普通列车");
+
         private String text;
-        TrainType(String text){
-            this.text=text;
+
+        TrainType(String text) {
+            this.text = text;
         }
+
         public String getText() {
             return this.text;
         }
+
         public static TrainType fromString(String text) {
             for (TrainType b : TrainType.values()) {
                 if (b.text.equalsIgnoreCase(text)) {
@@ -57,14 +60,14 @@ public class TrainEntity {
 
     @NotNull
     @Type(BooleanArrayType.class)
-    @Column(name = "seats",columnDefinition = "boolean[][]")
+    @Column(name = "seats", columnDefinition = "boolean[][]")
     private boolean[][] seats;
 
     @NotNull
     private TrainType trainType;
 
     @NotNull
-    private String date; 
+    private String date;
 
     @NotNull
     private List<Date> arrivalTimes;

@@ -38,7 +38,7 @@ public class UserController {
     @DeleteMapping("session")
     public CommonResponse<?> logout() {
         StpUtil.checkLogin();
-        return CommonResponse.success(204);
+        return CommonResponse.success(200);
     }
 
     @GetMapping("user")
