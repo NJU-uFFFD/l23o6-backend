@@ -11,5 +11,7 @@ public interface OrderMapper {
     OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
 
     @Mapping(target = "status", source = "entity.status.text")
+    @Mapping(target = "startStationId", source = "entity.departureStationId")
+    @Mapping(target = "endStationId", source = "entity.arrivalStationId")
     OrderVO toOrderVO(OrderEntity entity);
 }

@@ -9,8 +9,8 @@ import lombok.Data;
 public class OrderVO {
     private Long id;
     private Long trainId;
-    private Long departureStationId;
-    private Long arrivalStationId;
+    private Long startStationId;
+    private Long endStationId;
     private String status;
     private Date createdAt;
     private String seat;

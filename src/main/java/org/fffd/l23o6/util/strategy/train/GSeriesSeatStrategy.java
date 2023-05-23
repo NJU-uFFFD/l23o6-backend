@@ -123,7 +123,7 @@ public class GSeriesSeatStrategy extends TrainSeatStrategy {
                 boolean isFree = true;
 
                 for (int j = startStationIndex; j < endStationIndex; j++) {
-                    if (seatMap[i][j]) {
+                    if (seatMap[j][i]) {
                         isFree = false;
                         break;
                     }  

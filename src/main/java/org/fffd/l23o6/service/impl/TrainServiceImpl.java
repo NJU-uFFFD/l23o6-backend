@@ -54,8 +54,8 @@ public class TrainServiceImpl implements TrainService {
         List<TrainVO> trainVOs = possibleTrains.stream().map(entity -> {
             RouteEntity route = routeDao.findById(entity.getRouteId()).get();
             List<TicketInfo> ticketInfos = new ArrayList<TicketInfo>();
-            int startStationIndex = route.getStationIds().indexOf(endStationId);
-            int endStationIndex = route.getStationIds().indexOf(startStationId);
+            int startStationIndex = route.getStationIds().indexOf(startStationId);
+            int endStationIndex = route.getStationIds().indexOf(endStationId);
             switch(entity.getTrainType()){
                 case HIGH_SPEED:
                     GSeriesSeatStrategy.INSTANCE.getLeftSeatCount(startStationIndex, endStationIndex, entity.getSeats()).forEach((type, count)->{

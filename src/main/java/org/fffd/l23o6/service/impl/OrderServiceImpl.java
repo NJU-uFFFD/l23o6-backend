@@ -38,16 +38,17 @@ public class OrderServiceImpl implements OrderService{
         String seat = null;
         switch(train.getTrainType()){
             case HIGH_SPEED:
-                seat = GSeriesSeatStrategy.INSTANCE.allocSeat(startStationIndex, endStationIndex,GSeriesSeatStrategy.GSeriesSeatType.fromString(seatType) , train.getSeats());
+                seat = GSeriesSeatStrategy.INSTANCE.allocSeat(startStationIndex, endStationIndex,GSeriesSeatStrategy.GSeriesSeatType.fromString(seatType), train.getSeats());
                 break;
             case NORMAL_SPEED:
-                seat = KSeriesSeatStrategy.INSTANCE.allocSeat(startStationIndex, endStationIndex,KSeriesSeatStrategy.KSeriesSeatType.fromString(seatType) , train.getSeats());
+                seat = KSeriesSeatStrategy.INSTANCE.allocSeat(startStationIndex, endStationIndex,KSeriesSeatStrategy.KSeriesSeatType.fromString(seatType), train.getSeats());
                 break;
         }
         if(seat == null){
             throw new BizException(BizError.OUT_OF_SEAT);
         }
         OrderEntity order = OrderEntity.builder().trainId(trainId).userId(userId).seat(seat).status(OrderStatus.PENDING_PAYMENT).arrivalStationId(toStationId).departureStationId(fromStationId).build();
+        train.setUpdatedAt(null);//force it to update
         trainDao.save(train);
         orderDao.save(order);
         return order.getId();
