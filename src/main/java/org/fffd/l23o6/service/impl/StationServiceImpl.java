@@ -25,7 +25,7 @@ public class StationServiceImpl implements StationService{
     }
     @Override
     public List<StationVO> listStations(){
-        return stationDao.findAll(Sort.by(Sort.Direction.DESC, "createdAt")).stream().map(StationMapper.INSTANCE::toStationVO).collect(Collectors.toList());
+        return stationDao.findAll(Sort.by(Sort.Direction.ASC, "name")).stream().map(StationMapper.INSTANCE::toStationVO).collect(Collectors.toList());
     }
     @Override
     public void addStation(String name){

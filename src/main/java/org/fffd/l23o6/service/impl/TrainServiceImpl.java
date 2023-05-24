@@ -88,7 +88,7 @@ public class TrainServiceImpl implements TrainService {
     
     @Override
     public List<AdminTrainVO> listTrainsAdmin(){
-        return trainDao.findAll(Sort.by(Sort.Direction.DESC, "createdAt")).stream().map(TrainMapper.INSTANCE::toAdminTrainVO).collect(Collectors.toList());
+        return trainDao.findAll(Sort.by(Sort.Direction.ASC, "name")).stream().map(TrainMapper.INSTANCE::toAdminTrainVO).collect(Collectors.toList());
     }
 
     @Override
