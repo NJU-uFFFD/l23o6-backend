@@ -15,6 +15,7 @@ import org.fffd.l23o6.pojo.entity.TrainEntity.TrainType;
 import org.fffd.l23o6.pojo.vo.train.AdminTrainVO;
 import org.fffd.l23o6.pojo.vo.train.TrainVO;
 import org.fffd.l23o6.pojo.vo.train.TicketInfo;
+import org.fffd.l23o6.pojo.vo.train.TrainDetailVO;
 import org.fffd.l23o6.service.TrainService;
 import org.fffd.l23o6.util.strategy.train.GSeriesSeatStrategy;
 import org.fffd.l23o6.util.strategy.train.KSeriesSeatStrategy;
@@ -31,8 +32,12 @@ public class TrainServiceImpl implements TrainService {
     private final RouteDao routeDao;
 
     @Override
-    public TrainVO getTrain(Long trainId){
-        return TrainMapper.INSTANCE.toTrainVO(trainDao.findById(trainId).get());
+    public TrainDetailVO getTrain(Long trainId){
+        TrainEntity train = trainDao.findById(trainId).get();
+        RouteEntity route = routeDao.findById(train.getRouteId()).get();
+        return TrainDetailVO.builder().id(trainId).date(train.getDate()).name(train.getName())
+            .stationIds(route.getStationIds()).arrivalTimes(train.getArrivalTimes())
+            .departureTimes(train.getDepartureTimes()).extraInfos(train.getExtraInfos()).build();
     }
     @Override
     public List<TrainVO> listTrains(Long startStationId, Long endStationId, String date) {

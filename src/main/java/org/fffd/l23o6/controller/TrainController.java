@@ -6,6 +6,7 @@ import io.github.lyc8503.spring.starter.incantation.pojo.CommonResponse;
 import org.fffd.l23o6.pojo.vo.train.AddTrainRequest;
 import org.fffd.l23o6.pojo.vo.train.AdminTrainVO;
 import org.fffd.l23o6.pojo.vo.train.ListTrainRequest;
+import org.fffd.l23o6.pojo.vo.train.TrainDetailVO;
 import org.fffd.l23o6.pojo.vo.train.TrainVO;
 import org.fffd.l23o6.service.TrainService;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -33,7 +34,7 @@ public class TrainController {
     }
 
     @GetMapping("train/{trainId}")
-    public CommonResponse<TrainVO> getTrain(@PathVariable Long trainId) {
+    public CommonResponse<TrainDetailVO> getTrain(@PathVariable Long trainId) {
         return CommonResponse.success(trainService.getTrain(trainId));
     }
 
