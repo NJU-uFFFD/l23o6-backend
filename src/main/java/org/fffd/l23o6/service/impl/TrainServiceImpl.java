@@ -19,6 +19,7 @@ import org.fffd.l23o6.pojo.vo.train.TrainDetailVO;
 import org.fffd.l23o6.service.TrainService;
 import org.fffd.l23o6.util.strategy.train.GSeriesSeatStrategy;
 import org.fffd.l23o6.util.strategy.train.KSeriesSeatStrategy;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import io.github.lyc8503.spring.starter.incantation.exception.BizException;
@@ -87,7 +88,7 @@ public class TrainServiceImpl implements TrainService {
     
     @Override
     public List<AdminTrainVO> listTrainsAdmin(){
-        return trainDao.findAll().stream().map(TrainMapper.INSTANCE::toAdminTrainVO).collect(Collectors.toList());
+        return trainDao.findAll(Sort.by(Sort.Direction.DESC, "createdAt")).stream().map(TrainMapper.INSTANCE::toAdminTrainVO).collect(Collectors.toList());
     }
 
     @Override

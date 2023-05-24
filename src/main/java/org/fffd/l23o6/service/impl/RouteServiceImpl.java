@@ -8,6 +8,7 @@ import org.fffd.l23o6.mapper.RouteMapper;
 import org.fffd.l23o6.pojo.entity.RouteEntity;
 import org.fffd.l23o6.pojo.vo.route.RouteVO;
 import org.fffd.l23o6.service.RouteService;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     public List<RouteVO> listRoutes() {
-        return routeDao.findAll().stream().map(RouteMapper.INSTANCE::toRouteVO).collect(Collectors.toList());
+        return routeDao.findAll(Sort.by(Sort.Direction.DESC, "createdAt")).stream().map(RouteMapper.INSTANCE::toRouteVO).collect(Collectors.toList());
     }
 
     @Override

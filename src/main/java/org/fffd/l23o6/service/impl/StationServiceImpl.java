@@ -9,6 +9,7 @@ import org.fffd.l23o6.mapper.StationMapper;
 import org.fffd.l23o6.pojo.entity.StationEntity;
 import org.fffd.l23o6.pojo.vo.station.StationVO;
 import org.fffd.l23o6.service.StationService;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import io.github.lyc8503.spring.starter.incantation.exception.BizException;
@@ -24,7 +25,7 @@ public class StationServiceImpl implements StationService{
     }
     @Override
     public List<StationVO> listStations(){
-        return stationDao.findAll().stream().map(StationMapper.INSTANCE::toStationVO).collect(Collectors.toList());
+        return stationDao.findAll(Sort.by(Sort.Direction.DESC, "createdAt")).stream().map(StationMapper.INSTANCE::toStationVO).collect(Collectors.toList());
     }
     @Override
     public void addStation(String name){
