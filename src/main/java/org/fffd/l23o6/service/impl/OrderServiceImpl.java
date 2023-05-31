@@ -113,7 +113,7 @@ public class OrderServiceImpl implements OrderService {
             throw new BizException(BizError.ILLEAGAL_ORDER_STATUS);
         }
 
-        order.setStatus(OrderStatus.PAID);
+        order.setStatus(OrderStatus.COMPLETED);
         orderDao.save(order);
     }
 
