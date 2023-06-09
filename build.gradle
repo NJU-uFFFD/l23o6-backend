@@ -52,7 +52,7 @@ dependencies {
     // Docs generation
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
 
-    implementation 'io.github.lyc8503:opening-incantation-spring-boot-starter:0.0.2'
+    implementation 'io.github.lyc8503:opening-incantation-spring-boot-starter:0.0.3'
 
     // Eureka client
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.0.1'

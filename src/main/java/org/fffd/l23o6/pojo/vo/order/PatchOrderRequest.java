@@ -1,6 +1,6 @@
 package org.fffd.l23o6.pojo.vo.order;
 
-import org.fffd.l23o6.enum_.order.OrderStatus;
+import org.fffd.l23o6.pojo.enum_.OrderStatus;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;

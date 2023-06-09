@@ -11,7 +11,7 @@ import org.fffd.l23o6.dao.TrainDao;
 import org.fffd.l23o6.mapper.TrainMapper;
 import org.fffd.l23o6.pojo.entity.RouteEntity;
 import org.fffd.l23o6.pojo.entity.TrainEntity;
-import org.fffd.l23o6.pojo.entity.TrainEntity.TrainType;
+import org.fffd.l23o6.pojo.enum_.TrainType;
 import org.fffd.l23o6.pojo.vo.train.AdminTrainVO;
 import org.fffd.l23o6.pojo.vo.train.TrainVO;
 import org.fffd.l23o6.pojo.vo.train.TicketInfo;
@@ -98,9 +98,9 @@ public class TrainServiceImpl implements TrainService {
     }
 
     @Override
-    public void addTrain(String name, Long routeId, String type, String date, List<Date> arrivalTimes,
+    public void addTrain(String name, Long routeId, TrainType type, String date, List<Date> arrivalTimes,
             List<Date> departureTimes) {
-        TrainEntity entity = TrainEntity.builder().name(name).routeId(routeId).trainType(TrainType.fromString(type))
+        TrainEntity entity = TrainEntity.builder().name(name).routeId(routeId).trainType(type)
                 .date(date).arrivalTimes(arrivalTimes).departureTimes(departureTimes).build();
         RouteEntity route = routeDao.findById(routeId).get();
         if (route.getStationIds().size() != entity.getArrivalTimes().size()
@@ -120,12 +120,12 @@ public class TrainServiceImpl implements TrainService {
     }
 
     @Override
-    public void changeTrain(Long id, String name, Long routeId, String type, String date, List<Date> arrivalTimes,
-            List<Date> departureTimes) {
+    public void changeTrain(Long id, String name, Long routeId, TrainType type, String date, List<Date> arrivalTimes,
+                            List<Date> departureTimes) {
         TrainEntity entity = trainDao.findById(id).get();
         entity.setName(name);
         entity.setRouteId(routeId);
-        entity.setTrainType(TrainType.fromString(type));
+        entity.setTrainType(type);
         entity.setDate(date);
         entity.setArrivalTimes(arrivalTimes);
         entity.setDepartureTimes(departureTimes);
