@@ -9,9 +9,11 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 import org.fffd.l23o6.pojo.vo.order.CreateOrderRequest;
+import org.fffd.l23o6.pojo.vo.order.InteractiveOrderInfo;
 import org.fffd.l23o6.pojo.vo.order.OrderIdVO;
 import org.fffd.l23o6.pojo.vo.order.OrderVO;
 import org.fffd.l23o6.pojo.vo.order.PatchOrderRequest;
+import org.fffd.l23o6.pojo.vo.order.PriceByCreditVO;
 import org.fffd.l23o6.service.OrderService;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,11 +29,12 @@ public class OrderController {
     @PostMapping("order")
     public CommonResponse<OrderIdVO> createOrder(@Valid @RequestBody CreateOrderRequest request) {
         StpUtil.checkLogin();
-        return CommonResponse.success(new OrderIdVO(orderService.createOrder(StpUtil.getLoginIdAsString(), request.getTrainId(), request.getStartStationId(), request.getEndStationId(), request.getSeatType(), null)));
+        return CommonResponse.success(new OrderIdVO(orderService.createOrder(StpUtil.getLoginIdAsString(),
+                request.getTrainId(), request.getStartStationId(), request.getEndStationId(), request.getSeatType())));
     }
 
     @GetMapping("order")
-    public CommonResponse<List<OrderVO>> listOrders(){
+    public CommonResponse<List<OrderVO>> listOrders() {
         StpUtil.checkLogin();
         return CommonResponse.success(orderService.listOrders(StpUtil.getLoginIdAsString()));
     }
@@ -41,12 +44,18 @@ public class OrderController {
         return CommonResponse.success(orderService.getOrder(orderId));
     }
 
-    @PatchMapping("order/{orderId}")
-    public CommonResponse<?> patchOrder(@PathVariable("orderId") Long orderId, @Valid @RequestBody PatchOrderRequest request) {
+    @GetMapping("order/credit/{orderId}")
+    public CommonResponse<PriceByCreditVO> getPriceByCredit(@PathVariable("orderId") Long orderId) {
+        return CommonResponse.success(new PriceByCreditVO(orderService.getPriceBothWay(orderId, true)));
+    }
 
+    @PatchMapping("order/{orderId}")
+    public CommonResponse<InteractiveOrderInfo> patchOrder(@PathVariable("orderId") Long orderId,
+            @Valid @RequestBody PatchOrderRequest request) {
+        String toRet = null;
         switch (request.getStatus()) {
-            case PAID:
-                orderService.payOrder(orderId);
+            case PENDING_PAYMENT:
+                toRet = orderService.payOrder(orderId, request.getPay_by_credit(), request.getPayment());
                 break;
             case CANCELLED:
                 orderService.cancelOrder(orderId);
@@ -55,6 +64,6 @@ public class OrderController {
                 throw new BizException(CommonErrorType.ILLEGAL_ARGUMENTS, "Invalid order status.");
         }
 
-        return CommonResponse.success();
+        return CommonResponse.success(new InteractiveOrderInfo(orderService.getStatus(orderId), toRet));
     }
 }

@@ -17,8 +17,13 @@ import org.fffd.l23o6.pojo.vo.train.TrainVO;
 import org.fffd.l23o6.pojo.vo.train.TicketInfo;
 import org.fffd.l23o6.pojo.vo.train.TrainDetailVO;
 import org.fffd.l23o6.service.TrainService;
+import org.fffd.l23o6.util.strategy.ticketPrice.TicketPriceStrategy;
 import org.fffd.l23o6.util.strategy.train.GSeriesSeatStrategy;
 import org.fffd.l23o6.util.strategy.train.KSeriesSeatStrategy;
+import org.fffd.l23o6.util.strategy.train.TrainSeatStrategy;
+import org.fffd.l23o6.util.strategy.trainStrategyFactory.GSeriesStrategyFactory;
+import org.fffd.l23o6.util.strategy.trainStrategyFactory.KSeriesStrategyFactory;
+import org.fffd.l23o6.util.strategy.trainStrategyFactory.TrainStrategyFactory;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -64,20 +69,17 @@ public class TrainServiceImpl implements TrainService {
             List<TicketInfo> ticketInfos = new ArrayList<TicketInfo>();
             int startStationIndex = route.getStationIds().indexOf(startStationId);
             int endStationIndex = route.getStationIds().indexOf(endStationId);
-            switch (entity.getTrainType()) {
-                case HIGH_SPEED:
-                    GSeriesSeatStrategy.INSTANCE.getLeftSeatCount(startStationIndex, endStationIndex, entity.getSeats())
-                            .forEach((type, count) -> {
-                                ticketInfos.add(new TicketInfo(type.getText(), count, 100));
-                            });
-                    break;
-                case NORMAL_SPEED:
-                    KSeriesSeatStrategy.INSTANCE.getLeftSeatCount(startStationIndex, endStationIndex, entity.getSeats())
-                            .forEach((type, count) -> {
-                                ticketInfos.add(new TicketInfo(type.getText(), count, 100));
-                            });
-                    break;
-            }
+            TrainStrategyFactory trainStrategyFactory = entity.getTrainType().equals(TrainType.HIGH_SPEED)
+                    ? new GSeriesStrategyFactory()
+                    : new KSeriesStrategyFactory();
+            TrainSeatStrategy trainSeatStrategy = trainStrategyFactory.getTrainSeatStrategy();
+            TicketPriceStrategy ticketPriceStrategy = trainStrategyFactory.getTicketPriceStrategy();
+            trainSeatStrategy.getLeftSeatCount(startStationIndex, endStationIndex, entity.getSeats())
+                    .forEach((type, count) -> {
+                        ticketInfos.add(new TicketInfo(type.getText(), count,
+                                ticketPriceStrategy.getPrice(startStationIndex, endStationIndex, type.getText())));
+                    });
+            ticketInfos.sort((a, b) -> b.getPrice().compareTo(a.getPrice()));
             TrainVO train = TrainVO.builder().id(entity.getId()).name(entity.getName())
                     .trainType(entity.getTrainType().getText())
                     .startStationId(startStationId)
@@ -116,12 +118,12 @@ public class TrainServiceImpl implements TrainService {
                 entity.setSeats(KSeriesSeatStrategy.INSTANCE.initSeatMap(route.getStationIds().size()));
                 break;
         }
-        trainDao.save(entity);
+        trainDao.saveAndFlush(entity);
     }
 
     @Override
     public void changeTrain(Long id, String name, Long routeId, TrainType type, String date, List<Date> arrivalTimes,
-                            List<Date> departureTimes) {
+            List<Date> departureTimes) {
         TrainEntity entity = trainDao.findById(id).get();
         entity.setName(name);
         entity.setRouteId(routeId);
@@ -143,7 +145,7 @@ public class TrainServiceImpl implements TrainService {
                 entity.setSeats(KSeriesSeatStrategy.INSTANCE.initSeatMap(route.getStationIds().size()));
                 break;
         }
-        trainDao.save(entity);
+        trainDao.saveAndFlush(entity);
     }
 
     @Override

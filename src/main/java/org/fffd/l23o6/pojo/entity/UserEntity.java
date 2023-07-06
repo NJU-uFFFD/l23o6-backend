@@ -13,9 +13,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 
-
 @Entity
-@Table(name = "user1")  // table name "user" is a reserved word in H2
+@Table(name = "user1") // table name "user" is a reserved word in H2
 @Data
 @Builder
 @AllArgsConstructor
@@ -37,6 +36,7 @@ public class UserEntity {
     private String phone;
     private String type;
     private String idn;
+    private Integer credit;
 
     @CreationTimestamp
     private Date createdAt;

@@ -17,15 +17,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RouteServiceImpl implements RouteService {
     private final RouteDao routeDao;
+
     @Override
     public void addRoute(String name, List<Long> stationIds) {
         RouteEntity route = RouteEntity.builder().name(name).stationIds(stationIds).build();
-        routeDao.save(route);
+        routeDao.saveAndFlush(route);
     }
 
     @Override
     public List<RouteVO> listRoutes() {
-        return routeDao.findAll(Sort.by(Sort.Direction.ASC, "name")).stream().map(RouteMapper.INSTANCE::toRouteVO).collect(Collectors.toList());
+        return routeDao.findAll(Sort.by(Sort.Direction.ASC, "name")).stream().map(RouteMapper.INSTANCE::toRouteVO)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -36,6 +38,6 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     public void editRoute(Long id, String name, List<Long> stationIds) {
-        routeDao.save(routeDao.findById(id).get().setStationIds(stationIds).setName(name));
+        routeDao.saveAndFlush(routeDao.findById(id).get().setStationIds(stationIds).setName(name));
     }
 }

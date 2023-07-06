@@ -23,8 +23,8 @@ public class UserServiceImpl implements UserService {
             throw new BizException(BizError.USERNAME_EXISTS);
         }
 
-        userDao.save(UserEntity.builder().username(username).password(BCrypt.hashpw(password))
-                .name(name).idn(idn).phone(phone).type(type).build());
+        userDao.saveAndFlush(UserEntity.builder().username(username).password(BCrypt.hashpw(password))
+                .name(name).idn(idn).phone(phone).type(type).credit(0).build());
     }
 
     @Override
@@ -41,11 +41,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void editInfo(String username, String name, String idn, String phone, String type){
+    public void editInfo(String username, String name, String idn, String phone, String type) {
         UserEntity user = userDao.findByUsername(username);
-        if(user == null){
+        if (user == null) {
             throw new BizException(CommonErrorType.ILLEGAL_ARGUMENTS, "用户不存在");
         }
-        userDao.save(user.setIdn(idn).setName(name).setPhone(phone).setType(type));
+        userDao.saveAndFlush(user.setIdn(idn).setName(name).setPhone(phone).setType(type));
+    }
+
+    @Override
+    public void editCredit(Long userId, int credit) {
+        UserEntity user = userDao.findById(userId).get();
+        if (user == null) {
+            throw new BizException(CommonErrorType.ILLEGAL_ARGUMENTS, "用户不存在");
+        }
+        userDao.saveAndFlush(user.setCredit(credit));
     }
 }
