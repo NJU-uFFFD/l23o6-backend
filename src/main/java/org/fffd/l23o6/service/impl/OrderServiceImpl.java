@@ -95,6 +95,25 @@ public class OrderServiceImpl implements OrderService {
         Date departureDate = train.getDepartureTimes().get(startIndex);
         UserEntity user = userDao.findById(order.getUserId()).get();
         Date stopCancel = new Date(departureDate.getTime() - 60 * 60 * 1000);
+        PaymentStrategy paymentStrategy = order.getPayment().equals(Payment.WECHAT_PAY.toInteger())
+                ? new WeChatPaymentStrategy()
+                : new AlipayPaymentStrategy();
+        OrderStatus getStatus = order.getStatus();
+        if (getStatus == null || getStatus.equals(OrderStatus.PENDING_PAYMENT)) {
+            try {
+                getStatus = paymentStrategy.checkOrderStatus(order.getStamp());
+                if (getStatus.equals(OrderStatus.PAID)) {
+                    order.setStatus(OrderStatus.PAID);
+                    order.setUpdatedAt(null);
+                    orderDao.save(order);
+                } else if (getStatus.equals(OrderStatus.CANCELLED)) {
+                    cancelOrder(id);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         if (order.getStatus().equals(OrderStatus.PAID) && (new Date().after(stopCancel))) {
             order.setStatus(OrderStatus.COMPLETED);
             user.setCredit(new CreditStrategy().getNewCredit(user.getCredit(), order.getPrice()));
@@ -188,42 +207,7 @@ public class OrderServiceImpl implements OrderService {
                 : new AlipayPaymentStrategy();
 
         try {
-
-            String toRet = paymentStrategy.PayOrder(moneyToPay, order.getStamp());
-            new Thread() {
-                @Override
-                public void run() {
-                    try {
-                        Date toCheck = new Date(new Date().getTime() + 60 * 1000);
-                        while (true) {
-                            OrderStatus getStatus = paymentStrategy.checkOrderStatus(order.getStamp());
-                            //                            System.err.println(getStatus);
-                            if (new Date().after(toCheck)) {
-                                cancelOrder(id);
-                                break;
-                            }
-                            if (getStatus == null || getStatus.equals(OrderStatus.PENDING_PAYMENT)) {
-                                continue;
-                            }
-                            if (getStatus.equals(OrderStatus.PAID)) {
-                                order.setStatus(OrderStatus.PAID);
-                                order.setUpdatedAt(null);
-                                orderDao.save(order);
-                                break;
-                            } else if (getStatus.equals(OrderStatus.CANCELLED)) {
-                                cancelOrder(id);
-                                break;
-                            }
-
-                            sleep(5000);
-                        }
-                    } catch (Exception e) {
-                        //                        cancelOrder(id);
-                        e.printStackTrace();
-                    }
-                }
-            }.start();
-            return toRet;
+            return paymentStrategy.PayOrder(moneyToPay, order.getStamp());
         } catch (Exception e) {
             e.printStackTrace();
         }
