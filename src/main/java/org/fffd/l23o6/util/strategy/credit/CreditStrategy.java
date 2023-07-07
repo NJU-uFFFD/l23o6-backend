@@ -1,8 +1,4 @@
 package org.fffd.l23o6.util.strategy.credit;
-
-import java.util.HashMap;
-import java.util.Map;
-
 public class CreditStrategy {
 
 

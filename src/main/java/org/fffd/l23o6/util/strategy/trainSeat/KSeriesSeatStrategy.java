@@ -1,7 +1,6 @@
 package org.fffd.l23o6.util.strategy.trainSeat;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -90,7 +89,6 @@ public class KSeriesSeatStrategy extends TrainSeatStrategy {
     }
 
     public Map<SeatType, Integer> getLeftSeatCount(int startStationIndex, int endStationIndex, boolean[][] seatMap) {
-        //TODO:
         Map<SeatType, Integer> toRet = new HashMap<>();
         int sizeOfSeat = seatMap[0].length;
         for (KSeriesSeatType typeHere: KSeriesSeatType.values()){
