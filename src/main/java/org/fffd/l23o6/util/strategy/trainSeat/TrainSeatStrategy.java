@@ -1,4 +1,4 @@
-package org.fffd.l23o6.util.strategy.train;
+package org.fffd.l23o6.util.strategy.trainSeat;
 
 import io.github.lyc8503.spring.starter.incantation.exception.BizException;
 import io.github.lyc8503.spring.starter.incantation.exception.CommonErrorType;

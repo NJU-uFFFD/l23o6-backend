@@ -1,4 +1,4 @@
-package org.fffd.l23o6.util.strategy.train;
+package org.fffd.l23o6.util.strategy.trainSeat;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -8,7 +8,6 @@ import java.util.Map;
 import io.github.lyc8503.spring.starter.incantation.exception.BizException;
 import io.github.lyc8503.spring.starter.incantation.exception.CommonErrorType;
 import jakarta.annotation.Nullable;
-import jakarta.persistence.criteria.CriteriaBuilder;
 
 
 public class KSeriesSeatStrategy extends TrainSeatStrategy {
@@ -84,16 +83,7 @@ public class KSeriesSeatStrategy extends TrainSeatStrategy {
         }
     }
 
-
-    /**allocSeat
-     * startStationIndex:顾名思义，是起始车站id在列表中的index
-     * endStationIndex：类似
-     * type：座位类型
-     * seatMap：座位映射表，true表示占用。第一维表示路段，第二维表示座位
-     */
     public @Nullable String allocSeat(int startStationIndex, int endStationIndex, String type, boolean[][] seatMap) {
-        //endStationIndex - 1 = upper bound
-        //TODO:
         KSeriesSeatType trueKSeat = KSeriesSeatType.fromString(type);
         Map<Integer, String> thisTypeMap = TYPE_MAP.get(trueKSeat);
         return allocSeatFreely(startStationIndex, endStationIndex, thisTypeMap, seatMap);
@@ -108,12 +98,6 @@ public class KSeriesSeatStrategy extends TrainSeatStrategy {
         }
         for (int j = 0 ; j < sizeOfSeat; j++){
             if (judgeIfSeatFree(startStationIndex, endStationIndex, j, seatMap)){
-//                for (Map.Entry<KSeriesSeatType, Map<Integer, String>> mapHere: TYPE_MAP.entrySet()){
-//                    if (mapHere.getValue().get(j) != null){
-//                        toRet.replace(mapHere.getKey(), toRet.get(mapHere.getKey()) + 1);
-//                        break;
-//                    }
-//                }
                 SeatType getType = SEATID_TYPE_MAP.get(j);
                 if (getType == null){
                     throw new BizException(CommonErrorType.UNKNOWN_ERROR, "座位类型未初始化");

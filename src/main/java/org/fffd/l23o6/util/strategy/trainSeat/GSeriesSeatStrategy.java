@@ -1,4 +1,4 @@
-package org.fffd.l23o6.util.strategy.train;
+package org.fffd.l23o6.util.strategy.trainSeat;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -7,7 +7,6 @@ import java.util.Map;
 import io.github.lyc8503.spring.starter.incantation.exception.BizException;
 import io.github.lyc8503.spring.starter.incantation.exception.CommonErrorType;
 import jakarta.annotation.Nullable;
-import org.fffd.l23o6.exception.BizError;
 
 
 public class GSeriesSeatStrategy extends TrainSeatStrategy {
@@ -80,8 +79,6 @@ public class GSeriesSeatStrategy extends TrainSeatStrategy {
 
     @Override
     public @Nullable String allocSeat(int startStationIndex, int endStationIndex, String type, boolean[][] seatMap) {
-        //endStationIndex - 1 = upper bound
-        // TODO
         GSeriesSeatType trueGSeat = GSeriesSeatType.fromString(type);
         Map<Integer, String> thisTypeMap = TYPE_MAP.get(trueGSeat);
         return allocSeatFreely(startStationIndex, endStationIndex, thisTypeMap, seatMap);
@@ -95,16 +92,8 @@ public class GSeriesSeatStrategy extends TrainSeatStrategy {
         for (GSeriesSeatType typeHere: GSeriesSeatType.values()){
             toRet.put(typeHere, 0);
         }
-        //TODO:模仿KSeriesSeatStrategy写好这里的修改， 把下面这个循环里的内容换掉
         for (int j = 0; j < sizeOfSeat; j++) {
             if (judgeIfSeatFree(startStationIndex, endStationIndex, j, seatMap)) {
-//                for (Map.Entry<GSeriesSeatType, Map<Integer, String>> mapHere: TYPE_MAP.entrySet()){
-//                    if (mapHere.getValue().get(j) != null){
-//                        toRet.replace(mapHere.getKey(), toRet.get(mapHere.getKey()) + 1);
-//                        break;
-//                    }
-//                }
-//           }
                 SeatType getType = SEATID_TYPE_MAP.get(j);
                 if (getType == null) {
                     throw new BizException(CommonErrorType.UNKNOWN_ERROR, "座位类型未初始化");

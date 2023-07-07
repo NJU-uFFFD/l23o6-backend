@@ -23,7 +23,7 @@ import org.fffd.l23o6.util.strategy.credit.CreditStrategy;
 import org.fffd.l23o6.util.strategy.payment.AlipayPaymentStrategy;
 import org.fffd.l23o6.util.strategy.payment.PaymentStrategy;
 import org.fffd.l23o6.util.strategy.payment.WeChatPaymentStrategy;
-import org.fffd.l23o6.util.strategy.train.TrainSeatStrategy;
+import org.fffd.l23o6.util.strategy.trainSeat.TrainSeatStrategy;
 import org.fffd.l23o6.util.strategy.trainStrategyFactory.GSeriesStrategyFactory;
 import org.fffd.l23o6.util.strategy.trainStrategyFactory.KSeriesStrategyFactory;
 import org.fffd.l23o6.util.strategy.trainStrategyFactory.TrainStrategyFactory;

@@ -3,7 +3,7 @@ package org.fffd.l23o6.util.strategy.ticketPrice;
 
 import io.github.lyc8503.spring.starter.incantation.exception.BizException;
 import org.fffd.l23o6.exception.BizError;
-import org.fffd.l23o6.util.strategy.train.GSeriesSeatStrategy;
+import org.fffd.l23o6.util.strategy.trainSeat.GSeriesSeatStrategy;
 
 public class GSeriesTicketPriceStrategy implements TicketPriceStrategy{
     public static final GSeriesTicketPriceStrategy INSTANCE = new GSeriesTicketPriceStrategy();

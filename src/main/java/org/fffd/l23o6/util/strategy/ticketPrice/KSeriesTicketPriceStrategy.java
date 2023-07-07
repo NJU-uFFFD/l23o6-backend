@@ -2,7 +2,7 @@ package org.fffd.l23o6.util.strategy.ticketPrice;
 
 import io.github.lyc8503.spring.starter.incantation.exception.BizException;
 import org.fffd.l23o6.exception.BizError;
-import org.fffd.l23o6.util.strategy.train.KSeriesSeatStrategy;
+import org.fffd.l23o6.util.strategy.trainSeat.KSeriesSeatStrategy;
 
 public class KSeriesTicketPriceStrategy implements TicketPriceStrategy{
     public static final KSeriesTicketPriceStrategy INSTANCE = new KSeriesTicketPriceStrategy();
