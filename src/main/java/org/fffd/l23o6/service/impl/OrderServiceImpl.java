@@ -215,7 +215,7 @@ public class OrderServiceImpl implements OrderService {
                                 break;
                             }
 
-                            sleep(1000 / 50);
+                            sleep(5000);
                         }
                     } catch (Exception e) {
                         //                        cancelOrder(id);
