@@ -45,9 +45,7 @@ public class AlipayPaymentStrategy extends PaymentStrategy {
         bizContent.put("timeout_express", "1m");
 
         request.setBizContent(bizContent.toString());
-
         AlipayTradePagePayResponse response = alipayClient.pageExecute(request);
-
         System.out.println(response.getBody());
         return response.getBody();
     }
@@ -59,11 +57,11 @@ public class AlipayPaymentStrategy extends PaymentStrategy {
         bizContent.put("out_trade_no", out_trade_no);
         request.setBizContent(bizContent.toString());
         AlipayTradeQueryResponse response = alipayClient.execute(request);
-        if (response.getSubCode().equals("ACQ.TRADE_NOT_EXIST")) {
+        System.out.println(response.getBody());
+        if ("ACQ.TRADE_NOT_EXIST".equals(response.getSubCode())) {
             return OrderStatus.PENDING_PAYMENT;
         }
-        String toRevert = response.getTradeStatus();
-        return revertToOrderStatus.getOrDefault(toRevert, OrderStatus.PENDING_PAYMENT);
+        return revertToOrderStatus.getOrDefault(response.getTradeStatus(), OrderStatus.PENDING_PAYMENT);
     }
 
     @Override
