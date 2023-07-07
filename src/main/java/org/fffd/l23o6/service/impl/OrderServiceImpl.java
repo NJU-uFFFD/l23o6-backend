@@ -207,7 +207,7 @@ public class OrderServiceImpl implements OrderService {
                 : new AlipayPaymentStrategy();
 
         try {
-            return paymentStrategy.PayOrder(moneyToPay, order.getStamp());
+            return paymentStrategy.PayOrder(moneyToPay, order.getId().toString(), order.getStamp());
         } catch (Exception e) {
             e.printStackTrace();
         }

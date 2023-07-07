@@ -33,12 +33,12 @@ public class AlipayPaymentStrategy extends PaymentStrategy {
     }
 
     @Override
-    public String PayOrder(int money, String id) throws AlipayApiException {
+    public String PayOrder(int money, String id, String stamp) throws AlipayApiException {
         AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
         request.setNotifyUrl("");
-        request.setReturnUrl("http://localhost:5173/user");
+        request.setReturnUrl("http://localhost:5173/order/" + id);
         JSONObject bizContent = new JSONObject();
-        bizContent.put("out_trade_no", id);
+        bizContent.put("out_trade_no", stamp);
         bizContent.put("total_amount", money);
         bizContent.put("subject", "train ticket");
         bizContent.put("product_code", "FAST_INSTANT_TRADE_PAY");
